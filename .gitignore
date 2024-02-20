@@ -1,4 +1,6 @@
-env
+.env
+.pyenv
 tempCodeRunnerFile.py
 __pycache__
 node_modules
+dist

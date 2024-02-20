@@ -6,7 +6,8 @@
   "scripts": {
     "test": "test",
     "run-pybot:win": "python -m pythonBot.main.main",
-    "run-pybot:mac": "python3 -m pythonBot.main.main"
+    "run-pybot:mac": "python3 -m pythonBot.main.main",
+    "run-tsbot": "cd typescriptBot & yarn start"
   },
   "author": "",
   "license": "ISC"
