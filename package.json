@@ -1,0 +1,13 @@
+{
+  "name": "chrundle",
+  "version": "1.0.0",
+  "description": "Chrundle discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "run-pybot:win": "python -m pythonBot.main.main",
+    "run-pybot:mac": "python3 -m pythonBot.main.main"
+  },
+  "author": "",
+  "license": "ISC"
+}
