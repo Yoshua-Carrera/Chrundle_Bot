@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "run-pybot:win": "python -m pythonBot.main.main",
-    "run-pybot:mac": "python3 -m pythonBot.main.main",
-    "run-tsbot": "cd typescriptBot & yarn start"
+    "pybot:win": "python -m pythonBot.main.main",
+    "pybot:mac": "python3 -m pythonBot.main.main",
+    "tsbot:dev": "cd typescriptBot && yarn start:dev"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2"
+  }
 }
