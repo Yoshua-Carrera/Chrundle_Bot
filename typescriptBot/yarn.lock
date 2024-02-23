@@ -67,10 +67,10 @@
     tslib "^2.6.2"
     ws "^8.14.2"
 
-"@esbuild/win32-x64@0.19.12":
+"@esbuild/linux-x64@0.19.12":
   version "0.19.12"
-  resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.19.12.tgz"
-  integrity sha512-T1QyPSDCyMXaO3pzBkF96E8xMkiRYbUEZADd29SyPGabqxMViNoii+NcK7eWJAEoU6RZyEm5lVSIjTmcdoB9HA==
+  resolved "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.19.12.tgz"
+  integrity sha512-B71g1QpxfwBvNrfyJdVDexenDIt1CiDN1TIXLbhOw0KhJzE78KIFGX6OJ9MrtC0oOqMWf+0xop4qEU8JrJTwCg==
 
 "@fastify/busboy@^2.0.0":
   version "2.1.0"
@@ -224,6 +224,10 @@ tsx@^4.7.1:
     get-tsconfig "^4.7.2"
   optionalDependencies:
     fsevents "~2.3.3"
+
+"typescript@file:../../../../../../../../home/algorithmic/.nvm/versions/node/v18.19.1/lib/node_modules/typescript":
+  version "5.3.3"
+  resolved "file:../../../../../../../../home/algorithmic/.nvm/versions/node/v18.19.1/lib/node_modules/typescript"
 
 undici-types@~5.26.4:
   version "5.26.5"
