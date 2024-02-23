@@ -1,5 +1,5 @@
 {
-  "name": "chrundle",
+  "name": "chrundle-bot",
   "version": "1.0.0",
   "description": "Chrundle discord bot",
   "main": "index.js",
