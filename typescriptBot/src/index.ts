@@ -1,34 +1,47 @@
-import 'dotenv/config'
-import { Client, Message } from 'discord.js'
-import { ClientEvents, intentList } from './models/discord-constants.models'
-import { createChannelCommand } from './commands/channel-management/channel-management'
- 
-let botId: string | undefined;
+import "dotenv/config";
+import { Client, Message } from "discord.js";
+import { ClientEvents, intentList } from "./models/discord-constants.models";
+import { ChrundleDtoService } from "./services/chrundle-dto.service";
+import { channelManagementCommand } from "./commands/channel-management/channel-management";
 
-const client = new Client({
-    intents: [...intentList]
-})
+class ChrundleBot {
+  botId: string | undefined;
 
+  client = new Client({
+    intents: [...intentList],
+  });
+  constructor(private chrundleDtoService: ChrundleDtoService) {
+    this.initializeBot();
+  }
 
-client.on(ClientEvents.READY, async (c: Client<true>) => {
-    console.log(`${c.user.username} is online.`)
-    await c.application.fetch()
-    botId = c.application.bot?.id
-})
+  initializeBot(): void {
+    // Client on ready listener
+    this.client.on(ClientEvents.READY, async (client: Client<true>) => {
+      console.log(`${client.user.username} is online.`);
+      await client.application.fetch();
+      this.botId = client.application.bot?.id;
+    });
 
-client.on(ClientEvents.MESSAGE_CREATE, async (msg: Message<boolean>) => {
-    //TODO clean this code
-    if(msg.author.id === botId) return
+    // Client on ready listener
+    this.client.on(
+      ClientEvents.MESSAGE_CREATE,
+      async (msg: Message<boolean>) => {
+        //TODO clean this code
+        if (msg.author.id === this.botId) return;
 
-    if (msg.content === '.test') {
-        await msg.channel.send('Hello world')
-    }
-    
-    const arg = msg.content.split(' ')
-    
-    if (arg[0] === createChannelCommand.name) {
-        createChannelCommand.callback(msg, {name: arg[1] })
-    }
-})
+        if (msg.content === `${this.chrundleDtoService.prefix}test`) {
+          await msg.channel.send("Hello world");
+        }
 
-client.login(process.env.TOKEN)
+        const commandMatch = this.chrundleDtoService.isCommandMatch(msg, channelManagementCommand);
+
+        if (!!commandMatch) {
+          commandMatch.callback(msg);
+        }
+      }
+    );
+  }
+}
+
+const chrundleBot = new ChrundleBot(new ChrundleDtoService());
+chrundleBot.client.login(process.env.TOKEN);

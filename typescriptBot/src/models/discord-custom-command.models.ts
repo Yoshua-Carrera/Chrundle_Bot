@@ -1,9 +1,9 @@
-import { CategoryCreateChannelOptions, Message } from "discord.js"
+import { Message } from "discord.js"
 
 export interface ChannelManagementCommand {
     name: string,
     description: string,
-    callback: createChannelCallback<void, CategoryCreateChannelOptions>
+    callback: channelManagementCallback<void, any>
 }
 
-type createChannelCallback<T, A> = (msg: Message<boolean>, args: A) => Promise<T> 
+type channelManagementCallback<T, A> = (msg: Message<boolean>, args?: A) => Promise<T>
