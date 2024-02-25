@@ -4,8 +4,7 @@
   "description": "typescript Chrundle bot",
   "main": "dist/index.js",
   "scripts": {
-    "start:dev": "nodemon -L --watch src/ --exec 'npm link typescript -s && tsc && ts-node' . -e ts",
-    "build": "tsc && node ."
+    "start:dev": "nodemon -L --watch src/ --exec 'tsc && ts-node' . -e ts"
   },
   "author": "",
   "license": "ISC",
