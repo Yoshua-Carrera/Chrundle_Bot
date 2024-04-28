@@ -24,6 +24,7 @@ export const intentList = [
 ]
 
 export enum ClientEvents {
-    READY='ready',
-    MESSAGE_CREATE='messageCreate'
+    READY = 'ready',
+    MESSAGE_CREATE = 'messageCreate',
+    INTERACTION_CREATE = 'interactionCreate'
 }
