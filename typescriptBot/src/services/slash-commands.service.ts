@@ -1,0 +1,30 @@
+import { REST, Routes } from "discord.js"
+import { channelManagementCommand } from "../commands/channel-management/channel-management"
+
+export class SlashCommandsService {
+  discordRest = new REST().setToken(process.env.TOKEN as string)
+
+  constructor() { }
+
+  async registerCommands() {
+    try {
+      console.log('Registering commands...')
+      await this.discordRest.put(
+        Routes.applicationGuildCommands(
+          process.env.CLIENT_ID as string,
+          process.env.GUILD_ID as string,
+        ),
+        { body: this.loadCommands() }
+      )
+      console.log('Slash commands registered')
+    } catch (error) {
+      console.log(`Something went wrong, Error: ${error}`)
+    }
+  }
+
+  loadCommands() {
+    return [
+      ...channelManagementCommand
+    ]
+  }
+}
