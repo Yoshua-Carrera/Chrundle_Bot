@@ -7,12 +7,17 @@
     "test": "test",
     "pybot:win": "python -m pythonBot.main.main",
     "pybot:mac": "python3 -m pythonBot.main.main",
-    "tsbot:dev": "cd typescriptBot && yarn start:dev"
+    "tsbot:dev": "cd typescriptBot && yarn start:dev",
+    "tsbot:dev:global": "cd typescriptBot && yarn start:dev -g true"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^3.1.0",
     "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "typescript": "^5.4.5",
+    "yargs": "^17.7.2"
   }
 }

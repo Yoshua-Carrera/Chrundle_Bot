@@ -1,4 +1,5 @@
 import "dotenv/config";
+import * as yargs from 'yargs'
 import { Client, Message } from "discord.js";
 import { ClientEvents, intentList } from "./models/discord-constants.models";
 import { ChrundleDtoService } from "./services/chrundle-dto.service";
@@ -19,15 +20,18 @@ class ChrundleBot {
   }
 
   initializeBot(): void {
+    const options = this.unpackYargs().argv as { globalCommands: boolean }
     // Client on ready listener
     this.client.on(ClientEvents.READY, async (client: Client<true>) => {
       console.log(`${client.user.username} is online.`);
       await client.application.fetch();
       this.botId = client.application.bot?.id;
     });
-
+    console.log(options.globalCommands)
     // Register slash commands
-    this.slashCommandsService.registerCommands()
+    options.globalCommands ? 
+      this.slashCommandsService.registerGlobalCommands() :
+      this.slashCommandsService.registerCommands()
 
     // Client message creation listener
     this.client.on(
@@ -55,6 +59,18 @@ class ChrundleBot {
         slashCommandMatch.slashCallback(interaction)
       }
     })
+  }
+  
+  unpackYargs() {
+    return yargs
+      .usage('Usage: -g <globalCommands>')
+      .help('help')
+      .option('globalCommands', {
+        alias: 'g',
+        describe: 'Should the slash commands be posted at a global level',
+        type: 'boolean',
+        default: false
+      })
   }
 }
 

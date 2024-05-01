@@ -22,6 +22,21 @@ export class SlashCommandsService {
     }
   }
 
+  async registerGlobalCommands() {
+    try {
+      console.log('Registering Global commands...')
+      await this.discordRest.put(
+        Routes.applicationCommands(
+          process.env.CLIENT_ID as string,
+        ),
+        { body: this.loadCommands() }
+      )
+      console.log('Slash global commands registered')
+    } catch (error) {
+      console.log(`Something went wrong, Error: ${error}`)
+    }
+  }
+
   loadCommands() {
     return [
       ...channelManagementCommand
