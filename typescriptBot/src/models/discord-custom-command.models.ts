@@ -6,7 +6,6 @@ export interface CommandBody {
     callback: CommandCallback<CommandResult, any>,
     slashCallback: slashCommandCallback<CommandResult, any>,
     options?: CommandBodyOption[],
-
 }
 
 type CommandCallback<T, A> = (msg: Message<boolean>, args?: A) => Promise<T>
@@ -30,4 +29,9 @@ export enum  SlashCommandOptions {
     CHANNEL_ID='channel-id',
     VOICE='voice',
     TARGET='target'
+}
+
+
+export enum  AvatarOptions {
+    USER_ID='userid',
 }
