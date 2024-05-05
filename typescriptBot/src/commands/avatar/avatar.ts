@@ -13,7 +13,7 @@ export const avatarCommand: CommandBody = {
     return returnValue;
   },
   slashCallback: async (interaction: ChatInputCommandInteraction) => {
-    const userId: string = interaction.options.get(AvatarOptions.USER_ID).value as string;
+    const userId: string = interaction.options.get('userid')?.value as string;
     if (userId) {
       // return the avatar of the uwser that was requested
       const user = await interaction.guild.members.fetch(userId)
