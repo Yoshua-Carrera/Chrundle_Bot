@@ -14,7 +14,7 @@ type slashCommandCallback<T, A> = (interaction: ChatInputCommandInteraction) => 
 export interface CommandResult {
     success: boolean;
     message: string
-    error: string | null;
+    error?: string | null;
 }
 
 export interface CommandBodyOption {
@@ -31,7 +31,16 @@ export enum  SlashCommandOptions {
     TARGET='target'
 }
 
-
 export enum  AvatarOptions {
     USER_ID='userid',
+}
+
+export enum  EmoteOptions {
+    URL='url',
+    NAME='name'
+}
+
+export enum SuccessFailure {
+    SUCESS='success',
+    FAILURE='failure'
 }

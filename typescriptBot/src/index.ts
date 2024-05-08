@@ -44,7 +44,7 @@ class ChrundleBot {
           await msg.channel.send("Hello world");
         }
 
-        const commandMatch = this.chrundleDtoService.isCommandMatch(msg, channelManagementCommand);
+        const commandMatch = this.chrundleDtoService.isCommandMatch(msg, this.slashCommandsService.loadCommands());
 
         if (!!commandMatch) {
           commandMatch.callback(msg);
