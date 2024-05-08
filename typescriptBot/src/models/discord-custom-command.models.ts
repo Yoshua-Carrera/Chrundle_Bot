@@ -31,9 +31,13 @@ export enum  SlashCommandOptions {
     TARGET='target'
 }
 
-
 export enum  AvatarOptions {
     USER_ID='userid',
+}
+
+export enum  EmoteOptions {
+    URL='url',
+    NAME='name'
 }
 
 export enum SuccessFailure {

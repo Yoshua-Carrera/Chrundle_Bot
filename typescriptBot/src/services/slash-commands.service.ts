@@ -1,6 +1,7 @@
 import { REST, Routes } from "discord.js"
 import { channelManagementCommand } from "../commands/channel-management/channel-management"
 import { avatarCommands } from "../commands/avatar-commands/avatar-commands"
+import { emoteCommands } from "../commands/emote-commands/emote-commands"
 
 export class SlashCommandsService {
   discordRest = new REST().setToken(process.env.TOKEN as string)
@@ -41,7 +42,8 @@ export class SlashCommandsService {
   loadCommands() {
     return [
       ...channelManagementCommand,
-      ...avatarCommands
+      ...avatarCommands,
+      ...emoteCommands
     ]
   }
 }
