@@ -1,9 +1,8 @@
 import "dotenv/config";
 import * as yargs from 'yargs'
-import { Client, Message } from "discord.js";
+import { CacheType, Client, Interaction, Message } from "discord.js";
 import { ClientEvents, intentList } from "./models/discord-constants.models";
 import { ChrundleDtoService } from "./services/chrundle-dto.service";
-import { channelManagementCommand } from "./commands/channel-management/channel-management";
 import { SlashCommandsService } from './services/slash-commands.service'
 
 class ChrundleBot {
@@ -52,7 +51,7 @@ class ChrundleBot {
       }
     );
 
-    this.client.on(ClientEvents.INTERACTION_CREATE, (interaction) => {
+    this.client.on(ClientEvents.INTERACTION_CREATE, (interaction: Interaction<CacheType>) => {
       if (!interaction.isChatInputCommand()) return;
       const slashCommandMatch = this.chrundleDtoService.isSlashCommandMatch(interaction, this.slashCommandsService.loadCommands())
       if(!!slashCommandMatch) {

@@ -27,3 +27,7 @@ export enum ClientEvents {
     READY='ready',
     MESSAGE_CREATE='messageCreate'
 }
+
+export enum FallBackMessaging {
+    GENERIC='Something went wrong, please make sure you gave a valid name'
+}
