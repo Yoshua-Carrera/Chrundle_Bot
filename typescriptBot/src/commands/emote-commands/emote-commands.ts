@@ -1,5 +1,6 @@
 import { ApplicationCommandOptionType, ChatInputCommandInteraction, GuildEmoji, Message } from "discord.js";
-import { AvatarOptions, CommandBody, CommandResult, EmoteOptions, SuccessFailure } from "../../models/discord-custom-command.models";
+import { CommandBody, EmoteOptions, SuccessFailure } from "../../models/discord-custom-command.models";
+import { FallBackMessaging } from "../../models/discord-message.models";
 
 export const addEmote: CommandBody = {
   name: "add_emote",
@@ -15,7 +16,7 @@ export const addEmote: CommandBody = {
         message: SuccessFailure.SUCESS
       }
     } catch (error) {
-      msg.reply(error)
+      msg.reply((error as Error)?.message || FallBackMessaging.GENERIC)
       return {
         success: false,
         message: SuccessFailure.FAILURE,
@@ -34,7 +35,7 @@ export const addEmote: CommandBody = {
         message: SuccessFailure.SUCESS
       }
     } catch (error) {
-      interaction.reply(error)
+      interaction.reply((error as Error)?.message || FallBackMessaging.GENERIC)
       return {
         success: false,
         message: SuccessFailure.FAILURE,
