@@ -268,8 +268,49 @@ export const retrieveNMessages: CommandBody = {
   ],
 };
 
+export const leaveBotServer: CommandBody = {
+  name:"leave_server",
+  description:"Command bot to leave a server it is in",
+  callback: async (msg: Message<boolean>) => {
+    try {
+      msg.reply('currently not supported, please use slash commands')
+      return {
+        success: true,
+        message: SuccessFailure.SUCESS,
+      };
+    } catch (error) {
+      msg.reply((error as Error)?.message || FallBackMessaging.GENERIC);
+    }
+  },
+  slashCallback: async (interaction: ChatInputCommandInteraction) => {
+    const serverId: string = interaction.options.get(
+      ServerCommandOptions.SERVER_ID
+    )?.value as string;
+    const server = await interaction.client.guilds.fetch(serverId)
+    try {
+      server.leave()
+      interaction.reply(`Rena Bot has left ${server.name}`)
+      return {
+        success: true,
+        message: SuccessFailure.SUCESS,
+      };
+    } catch (error) {
+      interaction.reply((error as Error)?.message || FallBackMessaging.GENERIC);
+    }
+  },
+  options: [
+    {
+      name: "server_id",
+      description: "The ID of the server you want the server to leave",
+      type: ApplicationCommandOptionType.String,
+      required: false,
+    },
+  ],
+}
+
 export const listServersCommands: CommandBody[] = [
   listServers,
   retrieveServerChannels,
   retrieveNMessages,
+  leaveBotServer
 ];
