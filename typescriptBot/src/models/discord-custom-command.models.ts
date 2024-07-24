@@ -40,6 +40,11 @@ export enum  EmoteOptions {
     NAME='name'
 }
 
+export enum  ServerCommandOptions {
+    SERVER_ID='server_id',
+    CHANNEL_ID='channel_id'
+}
+
 export enum SuccessFailure {
     SUCESS='success',
     FAILURE='failure'

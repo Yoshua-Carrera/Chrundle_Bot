@@ -8,7 +8,8 @@
     "pybot:win": "python -m pythonBot.main.main",
     "pybot:mac": "python3 -m pythonBot.main.main",
     "tsbot:dev": "cd typescriptBot && yarn start:dev",
-    "tsbot:dev:global": "cd typescriptBot && yarn start:dev -g true"
+    "tsbot:dev:global": "cd typescriptBot && yarn start:dev -g true",
+    "tsbot:dev:global:private": "cd typescriptBot && yarn start:dev -g true -p true"
   },
   "author": "",
   "license": "ISC",
