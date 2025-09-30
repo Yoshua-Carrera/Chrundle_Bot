@@ -1,5 +1,18 @@
-import { ApplicationCommandOptionType, CategoryCreateChannelOptions, ChannelType, ChatInputCommandInteraction, Message } from "discord.js";
-import { CommandBody, CommandResult, SlashCommandOptions } from "../../models/discord-custom-command.models";
+import {
+  ApplicationCommandOptionType,
+  CategoryCreateChannelOptions,
+  ChannelType,
+  ChatInputCommandInteraction,
+  DiscordErrorData,
+  Message,
+  OAuthErrorData,
+} from "discord.js";
+import {
+  CommandBody,
+  CommandResult,
+  SlashCommandOptions,
+} from "../../models/discord-custom-command.models";
+import { extractApiError } from "../../services/error-handling.service";
 
 export const createChannelCmd: CommandBody = {
   name: "create_channel",
@@ -10,7 +23,9 @@ export const createChannelCmd: CommandBody = {
       const regex: RegExp = /-([0-9]{18,})/g;
       const channelCreateOptions: CategoryCreateChannelOptions = {
         name: arg[1],
-        type: !!msg.content.includes("-v") ? ChannelType.GuildVoice : ChannelType.GuildText,
+        type: !!msg.content.includes("-v")
+          ? ChannelType.GuildVoice
+          : ChannelType.GuildText,
       };
 
       const channel = await msg.guild?.channels.create(channelCreateOptions);
@@ -35,11 +50,17 @@ export const createChannelCmd: CommandBody = {
   slashCallback: async (interaction: ChatInputCommandInteraction) => {
     try {
       const channelCreateOptions: CategoryCreateChannelOptions = {
-        name: interaction.options.get(SlashCommandOptions.CHANNEL).value as string,
-        type: interaction.options.get(SlashCommandOptions.VOICE)?.value ? ChannelType.GuildVoice : ChannelType.GuildText,
+        name: interaction.options.get(SlashCommandOptions.CHANNEL)
+          .value as string,
+        type: interaction.options.get(SlashCommandOptions.VOICE)?.value
+          ? ChannelType.GuildVoice
+          : ChannelType.GuildText,
       };
-      const channel = await interaction.guild?.channels.create(channelCreateOptions);
-      const targetCategory: string = interaction.options.get(SlashCommandOptions.TARGET)?.value as string;
+      const channel =
+        await interaction.guild?.channels.create(channelCreateOptions);
+      const targetCategory: string = interaction.options.get(
+        SlashCommandOptions.TARGET,
+      )?.value as string;
       if (targetCategory) {
         channel?.setParent(targetCategory);
       }
@@ -48,10 +69,12 @@ export const createChannelCmd: CommandBody = {
 
       return { success: true, message: message, error: null } as CommandResult;
     } catch (error) {
-      interaction.reply(`Something went wrong: ${error}`);
+      interaction.reply(
+        `Something went wrong: ${extractApiError(error as DiscordErrorData | OAuthErrorData)}`,
+      );
       return {
         success: false,
-        message: `Something went wrong, error: ${error}`,
+        message: `Something went wrong: ${extractApiError(error as DiscordErrorData | OAuthErrorData)}`,
         error,
       } as CommandResult;
     }
@@ -100,7 +123,8 @@ export const deleteChannelCmd: CommandBody = {
   },
   slashCallback: async (interaction) => {
     try {
-      const targetId = interaction.options.get(SlashCommandOptions.CHANNEL_ID)?.value as string;
+      const targetId = interaction.options.get(SlashCommandOptions.CHANNEL_ID)
+        ?.value as string;
       const channel = await interaction.guild?.channels.fetch(targetId);
       interaction.guild?.channels.delete(targetId);
       interaction.reply(`Channel ${channel.name} deleted`);
@@ -128,4 +152,7 @@ export const deleteChannelCmd: CommandBody = {
   ],
 };
 
-export const channelManagementCommand: CommandBody[] = [createChannelCmd, deleteChannelCmd];
+export const channelManagementCommand: CommandBody[] = [
+  createChannelCmd,
+  deleteChannelCmd,
+];
