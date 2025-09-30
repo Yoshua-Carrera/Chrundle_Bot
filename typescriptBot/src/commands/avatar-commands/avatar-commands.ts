@@ -1,5 +1,18 @@
-import { ApplicationCommandOptionType, ChatInputCommandInteraction, Message } from "discord.js";
-import { AvatarOptions, CommandBody, CommandResult, SuccessFailure } from "../../models/discord-custom-command.models";
+import {
+  ApplicationCommandOptionType,
+  ChatInputCommandInteraction,
+  DiscordAPIError,
+  DiscordErrorData,
+  Message,
+  OAuthErrorData,
+} from "discord.js";
+import {
+  AvatarOptions,
+  CommandBody,
+  CommandResult,
+  SuccessFailure,
+} from "../../models/discord-custom-command.models";
+import { extractApiError } from "../../services/error-handling.service";
 
 export const avatarCommand: CommandBody = {
   name: "avatar",
@@ -7,7 +20,9 @@ export const avatarCommand: CommandBody = {
   callback: async (msg: Message<boolean>) => {
     try {
       // From Mention
-      const avatarFromMention: string = msg.mentions?.users?.first()?.avatarURL();
+      const avatarFromMention: string = msg.mentions?.users
+        ?.first()
+        ?.avatarURL();
       if (avatarFromMention) {
         msg.reply(avatarFromMention);
         return {
@@ -38,7 +53,8 @@ export const avatarCommand: CommandBody = {
   },
   slashCallback: async (interaction: ChatInputCommandInteraction) => {
     try {
-      const userId: string = interaction.options.get(AvatarOptions.USER_ID)?.value as string;
+      const userId: string = interaction.options.get(AvatarOptions.USER_ID)
+        ?.value as string;
       if (userId) {
         const user = await interaction.guild.members.fetch(userId);
         interaction.reply(user.user.avatarURL());
@@ -49,12 +65,15 @@ export const avatarCommand: CommandBody = {
           message: SuccessFailure.SUCESS,
         };
       }
-    } catch (error) {
-      interaction.reply(error);
+    } catch (error: unknown) {
+      interaction.reply(
+        `Something went wrong: ${extractApiError(error as DiscordErrorData | OAuthErrorData)}`,
+      );
       return {
         success: false,
-        message: error as string,
-      };
+        message: `Something went wrong: ${extractApiError(error as DiscordErrorData | OAuthErrorData)}`,
+        error,
+      } as CommandResult;
     }
   },
   options: [
