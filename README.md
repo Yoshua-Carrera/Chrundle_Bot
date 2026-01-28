@@ -57,6 +57,16 @@ The bot is designed to handle both traditional prefix-based commands and modern 
 
 This dual-callback approach allows for flexible command invocation and ensures that all commands are accessible in both ways.
 
+### GraphQL Integration
+
+This project uses GraphQL to fetch data from external APIs, specifically the [Anilist API](https://graphql.anilist.co) for the manga commands. To ensure type safety and a better developer experience, we use [GraphQL Code Generator](https://www.graphql-code-generator.com/) to automatically generate TypeScript types from our `.gql` files.
+
+When you run `npm run gen-gql`, it will:
+1.  Look for `.gql` files in the `src/graphql` directory.
+2.  Generate a corresponding `.ts` file for each `.gql` file. This generated file will contain typed document nodes that you can import directly into your command files.
+
+This means you get full type support for your query variables and results, reducing the risk of runtime errors.
+
 ### Adding a New Command
 
 To add a new command to the TypeScript bot, follow these steps:
@@ -103,6 +113,7 @@ To add a new command to the TypeScript bot, follow these steps:
 
     export const myNewCommands: CommandBody[] = [myNewCommand];
     ```
+    **Note on GraphQL Commands**: If your command uses GraphQL, first add your `.gql` file in the `src/graphql` directory, then run `npm run gen-gql`. You can then import the generated typed document node into your command file.
 
 3.  **Register the Command**: Open `typescriptBot/src/services/slash-commands.service.ts` and import your new command array. Then, add it to the `loadCommands` method:
 
@@ -136,6 +147,7 @@ To add a new command to the TypeScript bot, follow these steps:
     ```
 4.  Run the bot:
     - For development with automatic restarts: `npm run start:dev`
+    - To generate GraphQL types: `npm run gen-gql`
     - To register commands globally: `npm run tsbot:dev:global` from the root directory.
 
 ## 🐍 Python Bot
