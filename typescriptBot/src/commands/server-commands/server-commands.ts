@@ -268,7 +268,6 @@ export const retrieveNMessages: CommandBody = {
     messages.forEach((message: Message<true>) => {
       response = response + `${message.author.username}: ${message.content}\n`;
     });
-    console.log({ response: response.length });
     try {
       interaction.reply(response);
       return {

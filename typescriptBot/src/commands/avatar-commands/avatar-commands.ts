@@ -1,7 +1,6 @@
 import {
   ApplicationCommandOptionType,
   ChatInputCommandInteraction,
-  DiscordAPIError,
   DiscordErrorData,
   Message,
   OAuthErrorData,
