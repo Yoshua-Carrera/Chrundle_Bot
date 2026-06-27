@@ -1,3 +1,4 @@
+// TODO: Add embed logic
 import {
   ApplicationCommandOptionType,
   ChatInputCommandInteraction,
