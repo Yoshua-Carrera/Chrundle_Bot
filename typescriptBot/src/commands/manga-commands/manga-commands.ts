@@ -13,13 +13,7 @@ import {
 } from "../../models/discord-custom-command.models";
 import { extractApiError } from "../../services/error-handling.service";
 import { GetMangaByNameQuery } from "../../gql/graphql";
-import {
-  executeQuery,
-  handleData,
-  handleError,
-  handleResponse,
-} from "../../services/graphql.service";
-import { option } from "yargs";
+import { executeQuery } from "../../services/graphql.service";
 
 export const getMangaCommand: CommandBody = {
   name: "manga",
